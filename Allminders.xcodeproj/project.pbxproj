@@ -9,13 +9,37 @@
 /* Begin PBXBuildFile section */
 		75A7CA0D25CDB2880021FEB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA0C25CDB2880021FEB9 /* AppDelegate.swift */; };
 		75A7CA0F25CDB2880021FEB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA0E25CDB2880021FEB9 /* SceneDelegate.swift */; };
-		75A7CA1125CDB2880021FEB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA1025CDB2880021FEB9 /* ViewController.swift */; };
+		75A7CA1125CDB2880021FEB9 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA1025CDB2880021FEB9 /* SignInViewController.swift */; };
 		75A7CA1425CDB2880021FEB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA1225CDB2880021FEB9 /* Main.storyboard */; };
 		75A7CA1725CDB2880021FEB9 /* Allminders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA1525CDB2880021FEB9 /* Allminders.xcdatamodeld */; };
 		75A7CA1925CDB28B0021FEB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA1825CDB28B0021FEB9 /* Assets.xcassets */; };
 		75A7CA1C25CDB28B0021FEB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA1A25CDB28B0021FEB9 /* LaunchScreen.storyboard */; };
 		75A7CA2725CDB28B0021FEB9 /* AllmindersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA2625CDB28B0021FEB9 /* AllmindersTests.swift */; };
 		75A7CA3225CDB28B0021FEB9 /* AllmindersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA3125CDB28B0021FEB9 /* AllmindersUITests.swift */; };
+		75A7CA4B25CDB2FB0021FEB9 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA4A25CDB2FB0021FEB9 /* Coordinator.swift */; };
+		75A7CA5325CDB3110021FEB9 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA5225CDB3110021FEB9 /* Storyboarded.swift */; };
+		75A7CA5825CDB32A0021FEB9 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA5725CDB32A0021FEB9 /* MainCoordinator.swift */; };
+		75A7CA6425CDB4BE0021FEB9 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA6325CDB4BE0021FEB9 /* ContainerViewController.swift */; };
+		75A7CA6D25CDB6390021FEB9 /* ActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA6C25CDB6390021FEB9 /* ActionBar.swift */; };
+		75A7CA7525CDB81E0021FEB9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA7425CDB81E0021FEB9 /* Constants.swift */; };
+		75A7CA7C25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA7A25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf */; };
+		75A7CA7D25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA7A25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf */; };
+		75A7CA7E25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA7A25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf */; };
+		75A7CA7F25CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA7B25CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf */; };
+		75A7CA8025CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA7B25CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf */; };
+		75A7CA8125CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 75A7CA7B25CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf */; };
+		75A7CA8D25CDBC070021FEB9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA8C25CDBC070021FEB9 /* Extensions.swift */; };
+		75A7CA8E25CDBC070021FEB9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA8C25CDBC070021FEB9 /* Extensions.swift */; };
+		75A7CA8F25CDBC070021FEB9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA8C25CDBC070021FEB9 /* Extensions.swift */; };
+		75EABC2A25CE961200B6D051 /* RemindersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EABC2925CE961200B6D051 /* RemindersView.swift */; };
+		75EABC3F25CE97FA00B6D051 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EABC3E25CE97FA00B6D051 /* NotesView.swift */; };
+		75EABC4425CEC0F100B6D051 /* CategorieCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EABC4325CEC0F100B6D051 /* CategorieCVC.swift */; };
+		75FE295A25D25C500034ACDF /* ReminderCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE295925D25C500034ACDF /* ReminderCVC.swift */; };
+		75FE296225D452E70034ACDF /* ContainerViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE296125D452E70034ACDF /* ContainerViewPresenter.swift */; };
+		75FE296725D457040034ACDF /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE296625D457040034ACDF /* SignInPresenter.swift */; };
+		75FE296D25D466AB0034ACDF /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE296C25D466AB0034ACDF /* SignInCoordinator.swift */; };
+		75FE297625D466EB0034ACDF /* ContainerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE297525D466EB0034ACDF /* ContainerPresenter.swift */; };
+		75FE297B25D467140034ACDF /* ContainerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE297A25D467140034ACDF /* ContainerCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +63,7 @@
 		75A7CA0925CDB2870021FEB9 /* Allminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Allminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A7CA0C25CDB2880021FEB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75A7CA0E25CDB2880021FEB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		75A7CA1025CDB2880021FEB9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		75A7CA1025CDB2880021FEB9 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		75A7CA1325CDB2880021FEB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		75A7CA1625CDB2880021FEB9 /* Allminders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Allminders.xcdatamodel; sourceTree = "<group>"; };
 		75A7CA1825CDB28B0021FEB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +75,24 @@
 		75A7CA2D25CDB28B0021FEB9 /* AllmindersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AllmindersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A7CA3125CDB28B0021FEB9 /* AllmindersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllmindersUITests.swift; sourceTree = "<group>"; };
 		75A7CA3325CDB28B0021FEB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		75A7CA4A25CDB2FB0021FEB9 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		75A7CA5225CDB3110021FEB9 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		75A7CA5725CDB32A0021FEB9 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		75A7CA6325CDB4BE0021FEB9 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		75A7CA6C25CDB6390021FEB9 /* ActionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionBar.swift; sourceTree = "<group>"; };
+		75A7CA7425CDB81E0021FEB9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		75A7CA7A25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Rounded-Regular.otf"; sourceTree = "<group>"; };
+		75A7CA7B25CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Rounded-Semibold.otf"; sourceTree = "<group>"; };
+		75A7CA8C25CDBC070021FEB9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		75EABC2925CE961200B6D051 /* RemindersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersView.swift; sourceTree = "<group>"; };
+		75EABC3E25CE97FA00B6D051 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		75EABC4325CEC0F100B6D051 /* CategorieCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorieCVC.swift; sourceTree = "<group>"; };
+		75FE295925D25C500034ACDF /* ReminderCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCVC.swift; sourceTree = "<group>"; };
+		75FE296125D452E70034ACDF /* ContainerViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewPresenter.swift; sourceTree = "<group>"; };
+		75FE296625D457040034ACDF /* SignInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
+		75FE296C25D466AB0034ACDF /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
+		75FE297525D466EB0034ACDF /* ContainerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPresenter.swift; sourceTree = "<group>"; };
+		75FE297A25D467140034ACDF /* ContainerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,11 +143,12 @@
 		75A7CA0B25CDB2880021FEB9 /* Allminders */ = {
 			isa = PBXGroup;
 			children = (
-				75A7CA0C25CDB2880021FEB9 /* AppDelegate.swift */,
-				75A7CA0E25CDB2880021FEB9 /* SceneDelegate.swift */,
-				75A7CA1025CDB2880021FEB9 /* ViewController.swift */,
+				75A7CA7925CDB90E0021FEB9 /* Fonts */,
+				75A7CA6B25CDB62D0021FEB9 /* Custom Elements */,
+				75A7CA6225CDB4A50021FEB9 /* Screens */,
+				75A7CA4925CDB2AA0021FEB9 /* Protocols */,
+				75A7CA4525CDB29C0021FEB9 /* Essentials */,
 				75A7CA1225CDB2880021FEB9 /* Main.storyboard */,
-				75A7CA1825CDB28B0021FEB9 /* Assets.xcassets */,
 				75A7CA1A25CDB28B0021FEB9 /* LaunchScreen.storyboard */,
 				75A7CA1D25CDB28B0021FEB9 /* Info.plist */,
 				75A7CA1525CDB2880021FEB9 /* Allminders.xcdatamodeld */,
@@ -129,6 +172,95 @@
 				75A7CA3325CDB28B0021FEB9 /* Info.plist */,
 			);
 			path = AllmindersUITests;
+			sourceTree = "<group>";
+		};
+		75A7CA4525CDB29C0021FEB9 /* Essentials */ = {
+			isa = PBXGroup;
+			children = (
+				75A7CA8B25CDBBFE0021FEB9 /* Extensions */,
+				75A7CA0C25CDB2880021FEB9 /* AppDelegate.swift */,
+				75A7CA0E25CDB2880021FEB9 /* SceneDelegate.swift */,
+				75A7CA1825CDB28B0021FEB9 /* Assets.xcassets */,
+				75A7CA5725CDB32A0021FEB9 /* MainCoordinator.swift */,
+				75A7CA7425CDB81E0021FEB9 /* Constants.swift */,
+			);
+			path = Essentials;
+			sourceTree = "<group>";
+		};
+		75A7CA4925CDB2AA0021FEB9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				75A7CA4A25CDB2FB0021FEB9 /* Coordinator.swift */,
+				75A7CA5225CDB3110021FEB9 /* Storyboarded.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		75A7CA6225CDB4A50021FEB9 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				75FE296B25D466980034ACDF /* SignIn */,
+				75FE297425D466D50034ACDF /* Container */,
+				75EABC2825CE95FA00B6D051 /* UIViews */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		75A7CA6B25CDB62D0021FEB9 /* Custom Elements */ = {
+			isa = PBXGroup;
+			children = (
+				75A7CA6C25CDB6390021FEB9 /* ActionBar.swift */,
+				75EABC4325CEC0F100B6D051 /* CategorieCVC.swift */,
+				75FE295925D25C500034ACDF /* ReminderCVC.swift */,
+			);
+			path = "Custom Elements";
+			sourceTree = "<group>";
+		};
+		75A7CA7925CDB90E0021FEB9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				75A7CA7A25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf */,
+				75A7CA7B25CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		75A7CA8B25CDBBFE0021FEB9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				75A7CA8C25CDBC070021FEB9 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		75EABC2825CE95FA00B6D051 /* UIViews */ = {
+			isa = PBXGroup;
+			children = (
+				75EABC2925CE961200B6D051 /* RemindersView.swift */,
+				75EABC3E25CE97FA00B6D051 /* NotesView.swift */,
+			);
+			path = UIViews;
+			sourceTree = "<group>";
+		};
+		75FE296B25D466980034ACDF /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				75FE296C25D466AB0034ACDF /* SignInCoordinator.swift */,
+				75A7CA1025CDB2880021FEB9 /* SignInViewController.swift */,
+				75FE296625D457040034ACDF /* SignInPresenter.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		75FE297425D466D50034ACDF /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				75FE297525D466EB0034ACDF /* ContainerPresenter.swift */,
+				75A7CA6325CDB4BE0021FEB9 /* ContainerViewController.swift */,
+				75FE296125D452E70034ACDF /* ContainerViewPresenter.swift */,
+				75FE297A25D467140034ACDF /* ContainerCoordinator.swift */,
+			);
+			path = Container;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,7 +368,9 @@
 			files = (
 				75A7CA1C25CDB28B0021FEB9 /* LaunchScreen.storyboard in Resources */,
 				75A7CA1925CDB28B0021FEB9 /* Assets.xcassets in Resources */,
+				75A7CA7F25CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf in Resources */,
 				75A7CA1425CDB2880021FEB9 /* Main.storyboard in Resources */,
+				75A7CA7C25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +378,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75A7CA7D25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf in Resources */,
+				75A7CA8025CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +387,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75A7CA7E25CDB91F0021FEB9 /* SF-Compact-Rounded-Regular.otf in Resources */,
+				75A7CA8125CDB91F0021FEB9 /* SF-Compact-Rounded-Semibold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,10 +399,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75A7CA1125CDB2880021FEB9 /* ViewController.swift in Sources */,
+				75A7CA1125CDB2880021FEB9 /* SignInViewController.swift in Sources */,
+				75A7CA5825CDB32A0021FEB9 /* MainCoordinator.swift in Sources */,
+				75EABC2A25CE961200B6D051 /* RemindersView.swift in Sources */,
+				75A7CA6D25CDB6390021FEB9 /* ActionBar.swift in Sources */,
+				75FE297625D466EB0034ACDF /* ContainerPresenter.swift in Sources */,
+				75FE296D25D466AB0034ACDF /* SignInCoordinator.swift in Sources */,
+				75A7CA6425CDB4BE0021FEB9 /* ContainerViewController.swift in Sources */,
 				75A7CA0D25CDB2880021FEB9 /* AppDelegate.swift in Sources */,
+				75A7CA7525CDB81E0021FEB9 /* Constants.swift in Sources */,
+				75A7CA4B25CDB2FB0021FEB9 /* Coordinator.swift in Sources */,
+				75FE296725D457040034ACDF /* SignInPresenter.swift in Sources */,
 				75A7CA1725CDB2880021FEB9 /* Allminders.xcdatamodeld in Sources */,
+				75FE297B25D467140034ACDF /* ContainerCoordinator.swift in Sources */,
+				75EABC3F25CE97FA00B6D051 /* NotesView.swift in Sources */,
+				75EABC4425CEC0F100B6D051 /* CategorieCVC.swift in Sources */,
 				75A7CA0F25CDB2880021FEB9 /* SceneDelegate.swift in Sources */,
+				75FE295A25D25C500034ACDF /* ReminderCVC.swift in Sources */,
+				75FE296225D452E70034ACDF /* ContainerViewPresenter.swift in Sources */,
+				75A7CA8D25CDBC070021FEB9 /* Extensions.swift in Sources */,
+				75A7CA5325CDB3110021FEB9 /* Storyboarded.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75A7CA2725CDB28B0021FEB9 /* AllmindersTests.swift in Sources */,
+				75A7CA8E25CDBC070021FEB9 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +436,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75A7CA3225CDB28B0021FEB9 /* AllmindersUITests.swift in Sources */,
+				75A7CA8F25CDBC070021FEB9 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +599,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 678L74QEPX;
 				INFOPLIST_FILE = Allminders/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -450,7 +607,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonas.allminders.Allminders;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -462,6 +619,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 678L74QEPX;
 				INFOPLIST_FILE = Allminders/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -469,7 +627,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonas.allminders.Allminders;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
