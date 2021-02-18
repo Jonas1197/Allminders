@@ -50,6 +50,8 @@ extension CALayer {
     }
 }
 
+
+
 extension UIView {
     
     func addShadow(withOpactiy opacity: Float, color color: UIColor, radius radius: CGFloat, andOffset offset: CGSize) {
@@ -238,6 +240,15 @@ extension UIView {
     }
 }
 
+extension String {
+    func capitalizingFirstLetter() -> String {
+      return prefix(1).uppercased() + self.lowercased().dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+      self = self.capitalizingFirstLetter()
+    }
+}
 
 //MARK: - UIColor
 

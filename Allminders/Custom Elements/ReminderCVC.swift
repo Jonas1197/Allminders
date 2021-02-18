@@ -11,7 +11,11 @@ class ReminderCVC: UICollectionViewCell {
     
     var didCheck: Bool = false
     
-    var reminder: Reminder!
+    var reminder: Reminder! {
+        didSet {
+            reminderTextField.text = reminder.body
+        }
+    }
     
     let reminderView: UIView = {
         let view = UIView()

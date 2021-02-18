@@ -15,11 +15,17 @@ class RemindersView: UIView {
     
     var delegate: RemindersViewDelegate?
     
-    let categories = ["test", "longerTest", "veryLongTest", "short", "foonai", "chznadar", "heavy sheep"]
+    fileprivate let categories = ["test", "longerTest", "veryLongTest", "short", "foonai", "chznadar", "heavy sheep"]
     
-    var justAddedReminder: Bool = false
+    fileprivate var selectedCategory: CategoryCVC?
     
-    let largeLabel: UILabel = {
+    fileprivate var justAddedReminder: Bool = false
+    
+    fileprivate var firstCategorySelected: Bool = false
+    
+    fileprivate var prevColor: UIColor!
+    
+    fileprivate let largeLabel: UILabel = {
         let label       = UILabel()
         label.text      = "Reminders"
         label.font      = UIFont(name: Font.semibold, size: 40)
@@ -28,7 +34,7 @@ class RemindersView: UIView {
         return label
     }()
     
-    let addButton: UIButton = {
+    fileprivate let addButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: Font.semibold, size: 40)
         button.titleLabel?.textColor = .white
@@ -39,7 +45,7 @@ class RemindersView: UIView {
         return button
     }()
     
-    let categoriesLabel: UILabel = {
+    fileprivate let categoriesLabel: UILabel = {
         let label       = UILabel()
         label.text      = "Categories"
         label.font      = UIFont(name: Font.semibold, size: 24)
@@ -48,7 +54,7 @@ class RemindersView: UIView {
         return label
     }()
     
-    let selectedCategoryLabel: UILabel = {
+    fileprivate let selectedCategoryLabel: UILabel = {
         let label       = UILabel()
         label.text      = "<Category>"
         label.font      = UIFont(name: Font.semibold, size: 24)
@@ -57,7 +63,7 @@ class RemindersView: UIView {
         return label
     }()
     
-    let separatorView: UIView = {
+    fileprivate let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = Colors.stoneGrey
         view.layer.cornerRadius = 0.5
@@ -65,9 +71,9 @@ class RemindersView: UIView {
         return view
     }()
     
-    var categoriesCV: UICollectionView!
+    fileprivate var categoriesCV: UICollectionView!
     
-    var remindersCV: UICollectionView!
+    fileprivate var remindersCV: UICollectionView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -131,7 +137,7 @@ class RemindersView: UIView {
     }
     
     fileprivate func insert(cellWithString string: String, atIndex index: Int) {
-        Test.reminders.insert(.init(body: string, dateCreated: Date()), at: index)
+        Test.reminders.insert(.init(body: string, dateCreated: Date(), category: (selectedCategory?.category)!), at: index)
         remindersCV.reloadData()
         remindersCV.layoutIfNeeded()
         justAddedReminder.toggle()
@@ -164,7 +170,7 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
         layout.scrollDirection       = .horizontal
         categoriesCV                 = .init(frame: frame, collectionViewLayout: layout)
         categoriesCV.tag             = 0
-        categoriesCV.register(CategorieCVC.self, forCellWithReuseIdentifier: Cell.cellID)
+        categoriesCV.register(CategoryCVC.self, forCellWithReuseIdentifier: Cell.cellID)
         categoriesCV.delegate        = self
         categoriesCV.dataSource      = self
         categoriesCV.backgroundColor = .clear
@@ -199,7 +205,7 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView.tag {
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.cellID, for: indexPath) as? CategorieCVC else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.cellID, for: indexPath) as? CategoryCVC else { return UICollectionViewCell() }
             return configure(cell, for: collectionView.tag, at: indexPath)
             
         case 1:
@@ -211,15 +217,32 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
         }
     }
     
-    func configure<T>(_ cell: T, for tag: Int, at indexPath: IndexPath) -> T {
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                self.prevColor       = cell.backgroundColor
+                cell.transform       = .init(scaleX: 0.90, y: 0.90)
+                cell.backgroundColor = Colors.deepBlue
+            }
+        }, completion: nil)
+  
+    }
+        
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.5) {
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                cell.transform       = .identity
+                cell.backgroundColor = self.prevColor
+            }
+        }
+    }
+    
+    fileprivate func configure<T>(_ cell: T, for tag: Int, at indexPath: IndexPath) -> T {
         var retCell: T!
         if tag == 0 {
-            let cCell = cell as! CategorieCVC
-            cCell.backgroundColor = Colors.greenDragon
-            cCell.categoryLabel.text = categories[indexPath.row]
-            
-            let colors = [Colors.deepBlue, Colors.goldStone, Colors.greenDragon, Colors.stoneGrey]
-            cCell.backgroundColor = colors.randomElement()
+            let cCell = cell as! CategoryCVC
+            cCell.category = Test.categories[indexPath.row]
+            selectFirst(categoryCell: cCell)
             retCell = cCell as? T
             
         } else {
@@ -227,18 +250,30 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
             rCell.reminder = Test.reminders[indexPath.row]
             rCell.initCellColor()
             rCell.backgroundColor = .clear
-            rCell.reminderTextField.text = Test.reminders[indexPath.row].body
             retCell = rCell as? T
         }
         
         return retCell
     }
     
+    fileprivate func selectFirst(categoryCell cell: CategoryCVC) {
+        if !firstCategorySelected {
+            cell.layer.borderColor = cell.category.color.cgColor
+            cell.categoryLabel.textColor = cell.category.color
+            cell.layer.borderWidth = 0.4
+            cell.backgroundColor = .white
+            cell.didSelect.toggle()
+            
+            selectedCategoryLabel.text = cell.category.name
+            selectedCategory = cell
+            #warning("Show all reminders under the selected category")
+            firstCategorySelected = true
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == 0 {
-            print("<Category selected: \(categories[indexPath.row])>")
-            selectedCategoryLabel.text = categories[indexPath.row]
-            animate(CategoryCell: collectionView.cellForItem(at: indexPath) as! CategorieCVC)
+            animate(CategoryCell: collectionView.cellForItem(at: indexPath) as! CategoryCVC)
         } else {
             print("<Reminder selected: \(Test.reminders[indexPath.row].id)")
         }
@@ -253,19 +288,32 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
         }
     }
     
-    fileprivate func animate(CategoryCell cell: CategorieCVC) {
+    fileprivate func animate(CategoryCell cell: CategoryCVC) {
         if !cell.didSelect {
+            
             UIView.animate(withDuration: 0.4, delay: 0.0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+                
+                if self.selectedCategory != nil {
+                    self.selectedCategory?.backgroundColor         = self.selectedCategory?.categoryLabel.textColor
+                    self.selectedCategory?.categoryLabel.textColor = .white
+                    self.selectedCategory?.layer.borderWidth       = 0
+                    self.selectedCategory?.didSelect.toggle()
+                }
+                
                 cell.layer.borderColor = cell.backgroundColor?.cgColor
                 cell.categoryLabel.textColor = cell.backgroundColor
                 cell.layer.borderWidth = 0.4
                 cell.backgroundColor = .white
                 cell.didSelect.toggle()
+                
+                self.selectedCategory = cell
+                self.selectedCategoryLabel.text = self.selectedCategory?.categoryLabel.text
+                
             }, completion: nil)
         }
     }
     
-    func getEstimatedFrame(forText text: String) -> CGRect {
+    fileprivate func getEstimatedFrame(forText text: String) -> CGRect {
         let size = CGSize(width: frame.width / 2, height: 1000)
         return NSString(string: text).boundingRect(with: size, options:  [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
     }

@@ -13,15 +13,26 @@ struct Cell {
 
 struct Test {
     static var reminders: [Reminder] = [
-        .init(body: "Clean my room", dateCreated: Date()),
-        .init(body: "Paint the floors", dateCreated: Date()),
-        .init(body: "Call my mother in law", dateCreated: Date()),
-        .init(body: "Extract that sweet Aether", dateCreated: Date()),
-        .init(body: "Sell time tunic in Sanctum", dateCreated: Date()),
-        .init(body: "Travel to Australia", dateCreated: Date()),
-        .init(body: "Make some cash on the side", dateCreated: Date()),
-        .init(body: "Conquer Africa", dateCreated: Date()),
-        .init(body: "Create a stunning new pell", dateCreated: Date()),
+        .init(body: "Clean my room", dateCreated: Date(), category: .init(name: "home", color: Colors.deepBlue)),
+        .init(body: "Paint the floors", dateCreated: Date(), category: .init(name: "home", color: Colors.deepBlue)),
+        .init(body: "Call my mother in law", dateCreated: Date(), category: .init(name: "family", color: Colors.greenDragon)),
+        .init(body: "Extract that sweet Aether", dateCreated: Date(), category: .init(name: "work", color: Colors.goldStone)),
+        .init(body: "Sell time tunic in Sanctum", dateCreated: Date(), category: .init(name: "work", color: Colors.goldStone)),
+        .init(body: "Travel to Australia", dateCreated: Date(), category: .init(name: "work", color: Colors.goldStone)),
+        .init(body: "Make some cash on the side", dateCreated: Date(), category: .init(name: "work", color: Colors.goldStone)),
+        .init(body: "Conquer Africa", dateCreated: Date(), category: .init(name: "personal", color: .cyan)),
+        .init(body: "Create a stunning new pell", dateCreated: Date(), category: .init(name: "personal", color: .cyan))
+    ]
+    
+    static var categories: [Category] = [
+        .init(name: "work", color: Colors.deepBlue),
+        .init(name: "family", color: Colors.greenDragon),
+        .init(name: "Groceries", color: Colors.goldStone),
+        .init(name: "School", color: .magenta),
+        .init(name: "University", color: .cyan),
+        .init(name: "friends", color: .brown),
+        .init(name: "Books", color: .green),
+        .init(name: "random", color: .orange),
     ]
 }
 
