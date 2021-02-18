@@ -30,7 +30,7 @@ class ActionBar: UIView {
     
     let bottomSpacing: CGFloat = 5
     
-    let buttonHeight:  CGFloat = 41
+    let buttonHeight:  CGFloat = 40
     
     let buttonWidth:   CGFloat = 40
     
@@ -80,7 +80,7 @@ class ActionBar: UIView {
     //MARK: - Buttons
     fileprivate let remindersButton: UIButton = {
         let button       = UIButton()
-        let config       = UIImage.SymbolConfiguration(pointSize: ElementConstant.iconScale, weight: .regular, scale: .large)
+        let config       = UIImage.SymbolConfiguration(pointSize: ElementConstant.iconScale, weight: .regular, scale: .medium)
         button.tag       = 0
         button.tintColor = .white
         button.setImage(UIImage(systemName: ElementConstant.SFRemindersIcon, withConfiguration: config), for: .normal)
@@ -91,7 +91,7 @@ class ActionBar: UIView {
     
     fileprivate let notesButton: UIButton = {
         let button       = UIButton()
-        let config       = UIImage.SymbolConfiguration(pointSize: ElementConstant.iconScale, weight: .regular, scale: .large)
+        let config       = UIImage.SymbolConfiguration(pointSize: ElementConstant.iconScale, weight: .regular, scale: .medium)
         button.tag       = 1
         button.tintColor = .white
         button.setImage(UIImage(systemName: ElementConstant.SFNotesIcon, withConfiguration: config), for: .normal)
@@ -102,7 +102,7 @@ class ActionBar: UIView {
     
     fileprivate let settingsButton: UIButton = {
         let button       = UIButton()
-        let config       = UIImage.SymbolConfiguration(pointSize: ElementConstant.iconScale, weight: .regular, scale: .large)
+        let config       = UIImage.SymbolConfiguration(pointSize: ElementConstant.iconScale, weight: .regular, scale: .medium)
         button.tag       = 2
         button.tintColor = .white
         button.setImage(UIImage(systemName: ElementConstant.SFGearIcon, withConfiguration: config), for: .normal)
@@ -144,7 +144,8 @@ class ActionBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        selectorBubble.layer.cornerRadius = 10
+        //selectorBubble.layer.cornerRadius = 10
+        selectorBubble.layer.roundCorners(to: .rounded)
     }
     
     fileprivate func setUp() {
@@ -179,7 +180,7 @@ extension ActionBar {
         delegate?.settingsTapped()
     }
     
-    private func animateSelector(toButton bt2: UIButton) {
+    private func animateSelector(toButton button: UIButton) {
         let buttons = [remindersButton, notesButton, settingsButton]
         UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: {
             
@@ -189,12 +190,12 @@ extension ActionBar {
                 }
             }
             
-            self.sbCenterY = bt2.centerYAnchor.constraint(equalTo: bt2.centerYAnchor)
-            self.sbCenterX = bt2.centerXAnchor.constraint(equalTo: bt2.centerXAnchor)
-            self.selectorBubble.center = bt2.center
+            self.sbCenterY = button.centerYAnchor.constraint(equalTo: button.centerYAnchor)
+            self.sbCenterX = button.centerXAnchor.constraint(equalTo: button.centerXAnchor)
+            self.selectorBubble.center = button.center
             self.selectorBubble.center.x += self.distance
 
-            bt2.tintColor = bt2.tintColor.inverseColor()
+            button.tintColor = button.tintColor.inverseColor()
         }, completion: nil)
     }
     
@@ -223,8 +224,8 @@ extension ActionBar {
         sbCenterY = selectorBubble.centerYAnchor.constraint(equalTo: remindersButton.centerYAnchor)
         NSLayoutConstraint.activate([
             sbCenterX, sbCenterY,
-            selectorBubble.widthAnchor.constraint(equalToConstant: buttonWidth),
-            selectorBubble.heightAnchor.constraint(equalToConstant: buttonHeight)
+            selectorBubble.widthAnchor.constraint(equalToConstant: buttonWidth + 5),
+            selectorBubble.heightAnchor.constraint(equalToConstant: buttonHeight + 5)
         ])
     }
 }

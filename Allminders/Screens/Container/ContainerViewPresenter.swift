@@ -7,11 +7,27 @@
 
 import Foundation
 
+protocol ContainerViewPresenterOutput: AnyObject {
+    func presentNotesView()
+    func presentRemindersView()
+    func presentSettingsView()
+    func presentNewReminderVC()
+}
+
+protocol ContainerViewPresenterInput: AnyObject {
+    func presentNotesView()
+    func presentRemindersView()
+    func presentSettingsView()
+    func presentNewReminderVC()
+}
+
 final class ContainerViewPresenter {
     
     weak var coordinator: MainCoordinator?
     
-    weak var input: ContainerViewInput?
+    weak var output: ContainerViewPresenterOutput?
+    
+    weak var input: ContainerViewPresenterInput?
     
     init() {
         
@@ -19,12 +35,25 @@ final class ContainerViewPresenter {
     
 }
 
-extension ContainerViewPresenter: ContainerViewOutput {
+extension ContainerViewPresenter: ContainerViewControllerOutput {
     
-    
-    func shouldPresentNotesView() {
-        
+    func shouldPresentNewReminderVC() {
+        output?.presentNewReminderVC()
     }
     
+    func didLoad() {
+        print("<didLoad ContainerVC>")
+    }
     
+    func shouldPresentRemindersView() {
+        output?.presentRemindersView()
+    }
+    
+    func shouldPresentNotesView() {
+        output?.presentNotesView()
+    }
+    
+    func shouldPresentSettingsView() {
+        output?.presentSettingsView()
+    }
 }

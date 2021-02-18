@@ -9,7 +9,7 @@ import UIKit
 
 class NotesView: UIView {
 
-    let largeTitle: UILabel = {
+    let largeLabel: UILabel = {
         let label       = UILabel()
         label.text      = "Notes"
         label.font      = UIFont(name: Font.semibold, size: 45)
@@ -32,7 +32,12 @@ class NotesView: UIView {
     }
     
     fileprivate func configureLargeLabel() {
-        largeTitle.fix(in: self, toTopWithPadding: 0, andHeight: 50)
+        addSubview(largeLabel)
+        NSLayoutConstraint.activate([
+            largeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            largeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            largeLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
     }
 
 }

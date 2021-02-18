@@ -32,7 +32,40 @@ extension Date {
 
 //MARK: - UIView
 
+extension CALayer {
+    func roundCorners(to radius: CornerRadiusStyle, smoothCorners: Bool = true) {
+        switch radius {
+        case .rounded:
+            cornerRadius = min(bounds.height/2, bounds.width/2)
+        case .custom(let rad):
+            cornerRadius = rad
+        case .other(let view):
+            cornerRadius = view.layer.cornerRadius
+        }
+        
+        guard bounds.width != bounds.height else { return }
+        if smoothCorners, #available(iOS 13.0, *) {
+            cornerCurve = .continuous
+        }
+    }
+}
+
 extension UIView {
+    
+    func addShadow(withOpactiy opacity: Float, color color: UIColor, radius radius: CGFloat, andOffset offset: CGSize) {
+        layer.shadowOpacity = opacity
+        layer.shadowColor   = color.cgColor
+        layer.shadowRadius  = radius
+        layer.shadowOffset  = offset
+    }
+    
+    func removeShadow() {
+        layer.shadowOpacity = 0.0
+        layer.shadowColor   = UIColor.clear.cgColor
+        layer.shadowRadius  = 0.0
+        layer.shadowOffset  = .init(width: 0, height: 0)
+    }
+    
     func fix(in container: UIView, padding: UIEdgeInsets = .zero) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.frame = container.frame

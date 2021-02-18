@@ -27,9 +27,4 @@ class MainCoordinator: Coordinator {
         childCoordinators.append(coord)
         coord.start()
     }
-    
-    func containerView() {
-    
-    }
 }
-

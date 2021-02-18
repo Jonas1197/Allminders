@@ -11,6 +11,20 @@ struct Cell {
     static let cellID = "cell"
 }
 
+struct Test {
+    static var reminders: [Reminder] = [
+        .init(body: "Clean my room", dateCreated: Date()),
+        .init(body: "Paint the floors", dateCreated: Date()),
+        .init(body: "Call my mother in law", dateCreated: Date()),
+        .init(body: "Extract that sweet Aether", dateCreated: Date()),
+        .init(body: "Sell time tunic in Sanctum", dateCreated: Date()),
+        .init(body: "Travel to Australia", dateCreated: Date()),
+        .init(body: "Make some cash on the side", dateCreated: Date()),
+        .init(body: "Conquer Africa", dateCreated: Date()),
+        .init(body: "Create a stunning new pell", dateCreated: Date()),
+    ]
+}
+
 struct ElementConstant {
     static let SFRemindersIcon    = "list.bullet"
     static let SFNotesIcon        = "note.text"
@@ -32,4 +46,11 @@ struct Colors {
 
 struct AnimationConstants {
     static let animationDuration = 0.5
+}
+
+
+enum CornerRadiusStyle {
+    case rounded
+    case custom(CGFloat)
+    case other(UIView)
 }

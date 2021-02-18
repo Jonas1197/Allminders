@@ -7,10 +7,17 @@
 
 import UIKit
 
-class RemindersView: UIView {
+protocol RemindersViewDelegate {
+    func addNewReminderTapped()
+}
 
+class RemindersView: UIView {
+    
+    var delegate: RemindersViewDelegate?
+    
     let categories = ["test", "longerTest", "veryLongTest", "short", "foonai", "chznadar", "heavy sheep"]
-    let reminders  = ["Get food", "Do that with this", "Write a new something", "Make dinner for this lady", "Get money from that guy", "Kick this from team", "Find that  treasure", "Buya an Apple", "Conquer the world", "Find some crabs", "Make a lovely painting"]
+    
+    var justAddedReminder: Bool = false
     
     let largeLabel: UILabel = {
         let label       = UILabel()
@@ -19,6 +26,17 @@ class RemindersView: UIView {
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let addButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: Font.semibold, size: 40)
+        button.titleLabel?.textColor = .white
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.backgroundColor = Colors.deepBlue
+        button.tintColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     let categoriesLabel: UILabel = {
@@ -60,8 +78,14 @@ class RemindersView: UIView {
         super.init(coder: coder)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        addButton.layer.roundCorners(to: .rounded)
+    }
+    
     fileprivate func setUp() {
         configureLargeLabel()
+        configureAddButton()
         configureCategoriesLabel()
         configureCategoriesCV()
         configureSelectedCategoryLabel()
@@ -69,7 +93,26 @@ class RemindersView: UIView {
     }
     
     fileprivate func configureLargeLabel() {
-        largeLabel.fix(in: self, toTopWithPadding: 0, andHeight: 50)
+        addSubview(largeLabel)
+        NSLayoutConstraint.activate([
+            largeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            largeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            largeLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+    }
+    
+    fileprivate func configureAddButton() {
+        addSubview(addButton)
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            addButton.centerYAnchor.constraint(equalTo: largeLabel.centerYAnchor),
+            addButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            addButton.heightAnchor.constraint(equalToConstant: 40),
+            addButton.widthAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        addButton.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
+       
     }
     
     fileprivate func configureCategoriesLabel() {
@@ -79,6 +122,35 @@ class RemindersView: UIView {
     fileprivate func configureSelectedCategoryLabel() {
         selectedCategoryLabel.fix(horizontallyIn: self, belowView: categoriesCV, withTopPadding: 25)
         separatorView.fix(horizontallyIn: self, belowView: selectedCategoryLabel, withTopPadding: 8, andHeight: 1)
+    }
+    
+    @objc fileprivate func addButtonTapped(_ sender: UIButton) {
+        //delegate?.addNewReminderTapped()
+        insert(cellWithString: "newReminder", atIndex: 0)
+        startEditingAddedCell(forCells: remindersCV.visibleCells)
+    }
+    
+    fileprivate func insert(cellWithString string: String, atIndex index: Int) {
+        Test.reminders.insert(.init(body: string, dateCreated: Date()), at: index)
+        remindersCV.reloadData()
+        remindersCV.layoutIfNeeded()
+        justAddedReminder.toggle()
+    }
+    
+    fileprivate func startEditingAddedCell(forCells cells: [UICollectionViewCell]) {
+        for cell in cells {
+            if let rCell = cell as? ReminderCVC {
+                if rCell.reminderTextField.text == "newReminder" {
+                    rCell.reminderTextField.becomeFirstResponder()
+                }
+            } else {
+                return
+            }
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        endEditing(true)
     }
 }
 
@@ -107,6 +179,7 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
         layout.sectionInset          = .init(top: 8, left: 15, bottom: 0, right: 0)
         layout.itemSize              = .init(width: frame.width - 45, height: 50)
         layout.scrollDirection       = .vertical
+        layout.minimumLineSpacing    = 15
         remindersCV                  = .init(frame: frame, collectionViewLayout: layout)
         remindersCV.tag              = 1
         remindersCV.register(ReminderCVC.self, forCellWithReuseIdentifier: Cell.cellID)
@@ -120,7 +193,7 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView.tag == 0 ? categories.count : reminders.count
+        return collectionView.tag == 0 ? categories.count : Test.reminders.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -151,8 +224,10 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
             
         } else {
             let rCell = cell as! ReminderCVC
+            rCell.reminder = Test.reminders[indexPath.row]
+            rCell.initCellColor()
             rCell.backgroundColor = .clear
-            rCell.reminderTitleLabel.text = reminders[indexPath.row]
+            rCell.reminderTextField.text = Test.reminders[indexPath.row].body
             retCell = rCell as? T
         }
         
@@ -163,8 +238,9 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
         if collectionView.tag == 0 {
             print("<Category selected: \(categories[indexPath.row])>")
             selectedCategoryLabel.text = categories[indexPath.row]
+            animate(CategoryCell: collectionView.cellForItem(at: indexPath) as! CategorieCVC)
         } else {
-            print("<Reminder selected: \(reminders[indexPath.row])")
+            print("<Reminder selected: \(Test.reminders[indexPath.row].id)")
         }
     }
     
@@ -174,6 +250,18 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
             return .init(width: size.width + 15, height: size.height + 15)
         } else {
             return .init(width: frame.width, height: 50)
+        }
+    }
+    
+    fileprivate func animate(CategoryCell cell: CategorieCVC) {
+        if !cell.didSelect {
+            UIView.animate(withDuration: 0.4, delay: 0.0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+                cell.layer.borderColor = cell.backgroundColor?.cgColor
+                cell.categoryLabel.textColor = cell.backgroundColor
+                cell.layer.borderWidth = 0.4
+                cell.backgroundColor = .white
+                cell.didSelect.toggle()
+            }, completion: nil)
         }
     }
     

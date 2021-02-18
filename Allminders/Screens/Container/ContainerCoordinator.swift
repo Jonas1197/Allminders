@@ -12,23 +12,24 @@ protocol ContainerCoordinatorOutput: AnyObject {
 }
     
 final class ContainerCoordinator: Coordinator {
-    weak var output: ContainerCoordinatorOutput?
     
-    var childCoordinators: [Coordinator] = []
+    weak var output: ContainerCoordinatorOutput?
     
     let navigationController: UINavigationController
     
-    let presenter: ContainerPresenter
+    var childCoordinators: [Coordinator] = []
+    
+    let presenter: ContainerViewPresenter
     
     init(navigationController: UINavigationController) {
-        presenter = ContainerPresenter()
+        presenter = ContainerViewPresenter()
         self.navigationController = navigationController
     }
     
     func start() {
-        let vc =  ContainerViewController.instantiate()
-        vc.output = presenter
-        presenter.input = vc
+        let vc           = ContainerViewController.instantiate()
+        vc.output        = presenter
+        presenter.input  = vc
         presenter.output = self
         navigationController.pushViewController(vc, animated: true)
     }
@@ -39,6 +40,27 @@ final class ContainerCoordinator: Coordinator {
     
 }
 
-extension ContainerCoordinator: ContainerPresenterOutput {
+extension ContainerCoordinator: ContainerViewPresenterOutput {
+    func presentNewReminderVC() {
+        startNewReminderCoordinator()
+    }
     
+    private func startNewReminderCoordinator() {
+        let newReminderCoordinator = NewReminderCoordinator(navigationController: navigationController)
+        childCoordinators.append(newReminderCoordinator)
+        newReminderCoordinator.output = self
+        newReminderCoordinator.start()
+    }
+    
+    func presentNotesView() {
+        presenter.input?.presentNotesView()
+    }
+    
+    func presentRemindersView() {
+        presenter.input?.presentRemindersView()
+    }
+    
+    func presentSettingsView() {
+        presenter.input?.presentSettingsView()
+    }
 }

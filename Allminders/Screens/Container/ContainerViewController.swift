@@ -17,24 +17,26 @@ protocol ContainerViewInput: AnyObject {
     
 }
 
-protocol ContainerViewOutput: AnyObject {
+protocol ContainerViewControllerOutput: AnyObject {
+    func didLoad()
     func shouldPresentNotesView()
+    func shouldPresentRemindersView()
+    func shouldPresentSettingsView()
+    func shouldPresentNewReminderVC()
 }
 
-extension ContainerViewController: ContainerViewInput {
-    
-}
 
 final class ContainerViewController: UIViewController, Storyboarded {
 
-    weak var output: ContainerViewOutput?
+    weak var output:             ContainerViewControllerOutput?
     
-    weak var coordinator: MainCoordinator?
+    weak var coordinator:        MainCoordinator?
     
-    private var currentViewType: ViewType = .reminders
+    private var currentViewType: ViewType      = .reminders
     
-    private let remindersView: RemindersView = .init()
-    private let notesView: NotesView = .init()
+    private let remindersView:   RemindersView = .init()
+    
+    private let notesView:       NotesView     = .init()
     
     let actionBar: ActionBar = {
         let ab = ActionBar()
@@ -44,25 +46,28 @@ final class ContainerViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        output?.didLoad()
         setUp()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        #warning("Add Super!!!!")
+        super.viewDidAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
     
     fileprivate func setUp() {
         configureActionBar()
         configureRemindersView()
+        configureNotesView()
+        configureSettingsView()
     }
     
     fileprivate func configureRemindersView() {
+        remindersView.delegate = self
         remindersView.fix(in: view, padding: UIEdgeInsets(top: 45, left: 10, bottom: 110, right: 10))
         remindersView.layer.opacity      = 1.0
         remindersView.backgroundColor    = .white
         remindersView.layer.cornerRadius = 10
-        changeFocus(toView: .reminders)
     }
     
     fileprivate func configureNotesView() {
@@ -70,38 +75,36 @@ final class ContainerViewController: UIViewController, Storyboarded {
         notesView.layer.opacity      = 0.0
         notesView.backgroundColor    = .white
         notesView.layer.cornerRadius = 10
-        changeFocus(toView: .notes)
+    }
+    
+    fileprivate func configureSettingsView() {
+        #warning("Implemintation missing!")
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
 
 
+extension ContainerViewController: RemindersViewDelegate {
+    func addNewReminderTapped() {
+        output?.shouldPresentNewReminderVC()
+    }
+}
+
 extension ContainerViewController: ActionBarDelegate {
 
     func remindersTapped() {
-        print("[reminders tapped]")
-        if currentViewType != .reminders {
-            currentViewType = .reminders
-            changeFocus(toView: currentViewType)
-        }
+        output?.shouldPresentRemindersView()
     }
     
     func notesTapped() {
         output?.shouldPresentNotesView()
-        
-//        print("[notes tapped]")
-//        if currentViewType != .notes {
-//            currentViewType = .notes
-//            configureNotesView()
-//            changeFocus(toView: currentViewType)
-//        }
     }
     
     func settingsTapped() {
-        print("[settings tapped]")
-//        if currentView != .settings {
-//            currentView = .settings
-//            changeFocus(toView: currentView)
-//        }
+        output?.shouldPresentSettingsView()
     }
     
     fileprivate func configureActionBar() {
@@ -118,8 +121,28 @@ extension ContainerViewController: ActionBarDelegate {
         
         actionBar.spacing = view.frame.width / 5.984
     }
+}
+
+extension ContainerViewController: ContainerViewPresenterInput {
+    func presentNewReminderVC() {
+        //coordinaaotr
+    }
     
-    fileprivate func changeFocus(toView viewType: ViewType) {
+    
+    func presentNotesView() {
+        changeFocus(toView: .notes)
+    }
+    
+    func presentRemindersView() {
+        changeFocus(toView: .reminders)
+    }
+    
+    func presentSettingsView() {
+        changeFocus(toView: .settings)
+    }
+    
+    
+    private func changeFocus(toView viewType: ViewType) {
         switch viewType {
         case .reminders:
             UIView.animate(withDuration: AnimationConstants.animationDuration - 0.2) {
@@ -143,6 +166,4 @@ extension ContainerViewController: ActionBarDelegate {
             }
         }
     }
-    
-    
 }

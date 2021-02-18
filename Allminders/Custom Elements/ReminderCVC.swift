@@ -9,11 +9,13 @@ import UIKit
 
 class ReminderCVC: UICollectionViewCell {
     
-    var tapped: Bool = false
+    var didCheck: Bool = false
+    
+    var reminder: Reminder!
     
     let reminderView: UIView = {
         let view = UIView()
-        view.backgroundColor = Colors.deepBlue
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -22,9 +24,18 @@ class ReminderCVC: UICollectionViewCell {
         let label = UILabel()
         label.text = "[Some reminder]"
         label.font = UIFont(name: Font.regular, size: 20)
-        label.textColor = .white
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let reminderTextField: UITextField = {
+        let tf = UITextField()
+        tf.font = UIFont(name: Font.regular, size: 20)
+        tf.borderStyle = .none
+        tf.textColor   = .black
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
     }()
     
     let checkView: UIView = {
@@ -55,40 +66,33 @@ class ReminderCVC: UICollectionViewCell {
     }
     
     fileprivate func setUp() {
-        backgroundColor = Colors.deepBlue
         configureConstraints()
     }
     
     fileprivate func setUpLayer() {
-        reminderView.layer.cornerRadius = frame.height / 4
-        reminderView.layer.shadowColor = UIColor.black.cgColor
-        reminderView.layer.shadowRadius = 3
-        reminderView.layer.shadowOpacity = 0.2
-        reminderView.layer.shadowOffset = .init(width: 0, height: 2)
+        reminderView.layer.roundCorners(to: .custom(frame.height / 4))
+        //reminderView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
+        reminderView.layer.borderWidth = 0.5
+        reminderView.layer.borderColor = Colors.stoneGrey.cgColor
         reminderView.layer.masksToBounds = false
         
-        checkView.layer.cornerRadius = checkView.frame.height / 2
-        checkView.layer.shadowColor = UIColor.black.cgColor
-        checkView.layer.shadowOpacity = 0.2
-        checkView.layer.shadowRadius = 3
-        checkView.layer.shadowOffset = .init(width: 0, height: 2)
-//        checkView.layer.borderWidth = 0.3
-//        checkView.layer.borderColor = Colors.stoneGrey.cgColor
+        checkView.layer.roundCorners(to: .rounded)
+        //checkView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
+        checkView.layer.borderWidth = 0.4
+        checkView.layer.borderColor = Colors.stoneGrey.cgColor
         checkView.layer.masksToBounds = false
         
-        checkTapperView.layer.cornerRadius = checkTapperView.frame.height / 2
-        checkTapperView.layer.shadowColor = UIColor.black.cgColor
-        checkTapperView.layer.shadowOpacity = 0.2
-        checkTapperView.layer.shadowRadius = 3
-        checkTapperView.layer.shadowOffset = .init(width: 0, height: 2)
-        checkTapperView.layer.borderWidth = 0.2
+        checkTapperView.layer.roundCorners(to: .rounded)
+        //checkTapperView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
+        checkTapperView.layer.borderWidth = 0.6
         checkTapperView.layer.borderColor = Colors.stoneGrey.cgColor
         checkTapperView.layer.masksToBounds = false
     }
     
     fileprivate func configureConstraints() {
         reminderView.fix(in: contentView, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60))
-        reminderTitleLabel.fix(in: reminderView, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        //reminderTitleLabel.fix(in: reminderView, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        reminderTextField.fix(in: reminderView, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         
         addSubview(checkView)
         NSLayoutConstraint.activate([
@@ -105,6 +109,7 @@ class ReminderCVC: UICollectionViewCell {
             checkTapperView.widthAnchor.constraint(equalToConstant: reminderView.frame.height - 15),
             checkTapperView.heightAnchor.constraint(equalToConstant: reminderView.frame.height - 15)
         ])
+        
         let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(checkTapped))
         checkTapperView.addGestureRecognizer(viewTapGesture)
     }
@@ -112,24 +117,61 @@ class ReminderCVC: UICollectionViewCell {
     @objc fileprivate func checkTapped() {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
-            if !self.tapped {
-                self.checkTapperView.layer.borderWidth = 0.0
-                self.checkTapperView.backgroundColor = Colors.greenDragon
-                self.checkTapperView.layer.shadowOpacity = 0.0
-                self.checkView.backgroundColor = Colors.greenDragon
-                self.checkView.layer.shadowOpacity = 0.0
-                
-                self.tapped.toggle()
-            } else {
-                self.checkTapperView.layer.borderWidth = 0.2
-                self.checkTapperView.backgroundColor = .white
-                self.checkTapperView.layer.shadowOpacity = 0.2
-                self.checkView.backgroundColor = .white
-                self.checkView.layer.shadowOpacity = 0.2
-                
-                self.tapped.toggle()
-            }
-            
+            self.checked()
         }, completion: nil)
+    }
+    
+    func initCellColor() {
+        reminder.isChecked ? colorInGreen() : colorInOriginal()
+    }
+    
+    private func checked() {
+        if !didCheck {
+            colorInGreen()
+            didCheck.toggle()
+            didCheck ? reminder.check() : reminder.uncheck()
+            
+        } else {
+            colorInOriginal()
+            didCheck.toggle()
+            didCheck ? reminder.check() : reminder.uncheck()
+        }
+    }
+    
+    private func colorInGreen() {
+       reminderView.removeShadow()
+       reminderView.layer.borderWidth    = 0.0
+       reminderView.backgroundColor      = Colors.greenDragon
+        //self.reminderTitleLabel.textColor    = .white
+        reminderTextField.textColor       = .white
+        
+        //self.checkView.removeShadow()
+        checkView.backgroundColor         = Colors.greenDragon
+        checkView.layer.borderWidth       = 0
+        
+        //self.checkTapperView.removeShadow()
+        checkTapperView.layer.borderWidth = 0
+        checkTapperView.backgroundColor   = Colors.greenDragon
+    }
+    
+    private func colorInOriginal() {
+        //reminderView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
+        reminderView.backgroundColor      = .white
+        reminderView.layer.borderWidth    = 0.5
+        reminderView.layer.borderColor    = Colors.stoneGrey.cgColor
+        //self.reminderTitleLabel.textColor    = .black
+        reminderTextField.textColor       = .black
+        
+        //checkView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
+        checkView.layer.borderWidth       = 0.4
+        checkView.backgroundColor         = .white
+        
+        //checkTapperView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
+        checkTapperView.layer.borderWidth = 0.6
+        checkTapperView.backgroundColor   = .white
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        reminderTextField.resignFirstResponder()
     }
 }

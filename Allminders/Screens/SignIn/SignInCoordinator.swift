@@ -13,6 +13,7 @@ class SignInCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     
     let navigationController: UINavigationController
+    
     let presenter: SignInPresenter
     
     init(navigationController: UINavigationController) {
@@ -21,11 +22,10 @@ class SignInCoordinator: Coordinator {
     }
 
     func start() {
-        let vc = SignInViewController.instantiate()
-        vc.output = presenter
-        presenter.input = vc
+        let vc           = SignInViewController.instantiate()
+        vc.output        = presenter
+        presenter.input  = vc
         presenter.output = self
-        
         navigationController.pushViewController(vc, animated: false)
     }
 }

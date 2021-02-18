@@ -7,20 +7,21 @@
 
 import UIKit
 
-protocol SignInViewOutput: AnyObject {
+protocol SignInViewControllerInput: AnyObject {
+    
+}
+
+protocol SignInViewControllerOutput: AnyObject {
     func didLoad()
     func shouldContinue()
 }
 
-protocol SignInViewInput: AnyObject {
-    
-}
 
-final class SignInViewController: UIViewController, SignInViewInput, Storyboarded  {
+final class SignInViewController: UIViewController, Storyboarded  {
     
     weak var coordinator: SignInCoordinator?
     
-    weak var output: SignInViewOutput?
+    weak var output: SignInViewControllerOutput?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,8 @@ final class SignInViewController: UIViewController, SignInViewInput, Storyboarde
     @IBAction func continueTapped(_ sender: UIButton) {
         output?.shouldContinue()
     }
-    
 }
 
+extension SignInViewController: SignInViewControllerInput {
+    
+}

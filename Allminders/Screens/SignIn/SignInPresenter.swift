@@ -18,7 +18,8 @@ protocol SignInPresenterInput: AnyObject {
 final class SignInPresenter {
     
     weak var output: SignInPresenterOutput?
-    weak var input: SignInViewInput?
+    
+    weak var input: SignInViewControllerInput?
     
     init() {
         
@@ -26,9 +27,9 @@ final class SignInPresenter {
     
 }
 
-extension SignInPresenter: SignInViewOutput {
+extension SignInPresenter: SignInViewControllerOutput {
     func didLoad() {
-        
+        print("<didLoad SignInVC>")
     }
     
     func shouldContinue() {

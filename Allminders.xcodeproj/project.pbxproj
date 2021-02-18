@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		755AF41925DE4E9000C2C9D5 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755AF41825DE4E9000C2C9D5 /* Reminder.swift */; };
 		75A7CA0D25CDB2880021FEB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA0C25CDB2880021FEB9 /* AppDelegate.swift */; };
 		75A7CA0F25CDB2880021FEB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA0E25CDB2880021FEB9 /* SceneDelegate.swift */; };
 		75A7CA1125CDB2880021FEB9 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A7CA1025CDB2880021FEB9 /* SignInViewController.swift */; };
@@ -38,8 +39,10 @@
 		75FE296225D452E70034ACDF /* ContainerViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE296125D452E70034ACDF /* ContainerViewPresenter.swift */; };
 		75FE296725D457040034ACDF /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE296625D457040034ACDF /* SignInPresenter.swift */; };
 		75FE296D25D466AB0034ACDF /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE296C25D466AB0034ACDF /* SignInCoordinator.swift */; };
-		75FE297625D466EB0034ACDF /* ContainerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE297525D466EB0034ACDF /* ContainerPresenter.swift */; };
 		75FE297B25D467140034ACDF /* ContainerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE297A25D467140034ACDF /* ContainerCoordinator.swift */; };
+		75FE298625D7D8AE0034ACDF /* NewReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE298525D7D8AE0034ACDF /* NewReminderVC.swift */; };
+		75FE298C25D7D9010034ACDF /* NewReminderCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE298B25D7D9010034ACDF /* NewReminderCoordinator.swift */; };
+		75FE299425D7D90A0034ACDF /* NewReminderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE299325D7D90A0034ACDF /* NewReminderPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		755AF41825DE4E9000C2C9D5 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		75A7CA0925CDB2870021FEB9 /* Allminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Allminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A7CA0C25CDB2880021FEB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75A7CA0E25CDB2880021FEB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,8 +95,10 @@
 		75FE296125D452E70034ACDF /* ContainerViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewPresenter.swift; sourceTree = "<group>"; };
 		75FE296625D457040034ACDF /* SignInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
 		75FE296C25D466AB0034ACDF /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
-		75FE297525D466EB0034ACDF /* ContainerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPresenter.swift; sourceTree = "<group>"; };
 		75FE297A25D467140034ACDF /* ContainerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerCoordinator.swift; sourceTree = "<group>"; };
+		75FE298525D7D8AE0034ACDF /* NewReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReminderVC.swift; sourceTree = "<group>"; };
+		75FE298B25D7D9010034ACDF /* NewReminderCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReminderCoordinator.swift; sourceTree = "<group>"; };
+		75FE299325D7D90A0034ACDF /* NewReminderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReminderPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +126,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		755AF41725DE4E7D00C2C9D5 /* DataStructs */ = {
+			isa = PBXGroup;
+			children = (
+				755AF41825DE4E9000C2C9D5 /* Reminder.swift */,
+			);
+			path = DataStructs;
+			sourceTree = "<group>";
+		};
 		75A7CA0025CDB2870021FEB9 = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +157,7 @@
 		75A7CA0B25CDB2880021FEB9 /* Allminders */ = {
 			isa = PBXGroup;
 			children = (
+				755AF41725DE4E7D00C2C9D5 /* DataStructs */,
 				75A7CA7925CDB90E0021FEB9 /* Fonts */,
 				75A7CA6B25CDB62D0021FEB9 /* Custom Elements */,
 				75A7CA6225CDB4A50021FEB9 /* Screens */,
@@ -199,6 +214,7 @@
 		75A7CA6225CDB4A50021FEB9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				75FE298A25D7D8E20034ACDF /* Reminders */,
 				75FE296B25D466980034ACDF /* SignIn */,
 				75FE297425D466D50034ACDF /* Container */,
 				75EABC2825CE95FA00B6D051 /* UIViews */,
@@ -236,7 +252,6 @@
 		75EABC2825CE95FA00B6D051 /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
-				75EABC2925CE961200B6D051 /* RemindersView.swift */,
 				75EABC3E25CE97FA00B6D051 /* NotesView.swift */,
 			);
 			path = UIViews;
@@ -245,8 +260,8 @@
 		75FE296B25D466980034ACDF /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
-				75FE296C25D466AB0034ACDF /* SignInCoordinator.swift */,
 				75A7CA1025CDB2880021FEB9 /* SignInViewController.swift */,
+				75FE296C25D466AB0034ACDF /* SignInCoordinator.swift */,
 				75FE296625D457040034ACDF /* SignInPresenter.swift */,
 			);
 			path = SignIn;
@@ -255,12 +270,22 @@
 		75FE297425D466D50034ACDF /* Container */ = {
 			isa = PBXGroup;
 			children = (
-				75FE297525D466EB0034ACDF /* ContainerPresenter.swift */,
 				75A7CA6325CDB4BE0021FEB9 /* ContainerViewController.swift */,
 				75FE296125D452E70034ACDF /* ContainerViewPresenter.swift */,
 				75FE297A25D467140034ACDF /* ContainerCoordinator.swift */,
 			);
 			path = Container;
+			sourceTree = "<group>";
+		};
+		75FE298A25D7D8E20034ACDF /* Reminders */ = {
+			isa = PBXGroup;
+			children = (
+				75EABC2925CE961200B6D051 /* RemindersView.swift */,
+				75FE298525D7D8AE0034ACDF /* NewReminderVC.swift */,
+				75FE298B25D7D9010034ACDF /* NewReminderCoordinator.swift */,
+				75FE299325D7D90A0034ACDF /* NewReminderPresenter.swift */,
+			);
+			path = Reminders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,9 +427,10 @@
 				75A7CA1125CDB2880021FEB9 /* SignInViewController.swift in Sources */,
 				75A7CA5825CDB32A0021FEB9 /* MainCoordinator.swift in Sources */,
 				75EABC2A25CE961200B6D051 /* RemindersView.swift in Sources */,
+				755AF41925DE4E9000C2C9D5 /* Reminder.swift in Sources */,
 				75A7CA6D25CDB6390021FEB9 /* ActionBar.swift in Sources */,
-				75FE297625D466EB0034ACDF /* ContainerPresenter.swift in Sources */,
 				75FE296D25D466AB0034ACDF /* SignInCoordinator.swift in Sources */,
+				75FE299425D7D90A0034ACDF /* NewReminderPresenter.swift in Sources */,
 				75A7CA6425CDB4BE0021FEB9 /* ContainerViewController.swift in Sources */,
 				75A7CA0D25CDB2880021FEB9 /* AppDelegate.swift in Sources */,
 				75A7CA7525CDB81E0021FEB9 /* Constants.swift in Sources */,
@@ -415,6 +441,8 @@
 				75EABC3F25CE97FA00B6D051 /* NotesView.swift in Sources */,
 				75EABC4425CEC0F100B6D051 /* CategorieCVC.swift in Sources */,
 				75A7CA0F25CDB2880021FEB9 /* SceneDelegate.swift in Sources */,
+				75FE298625D7D8AE0034ACDF /* NewReminderVC.swift in Sources */,
+				75FE298C25D7D9010034ACDF /* NewReminderCoordinator.swift in Sources */,
 				75FE295A25D25C500034ACDF /* ReminderCVC.swift in Sources */,
 				75FE296225D452E70034ACDF /* ContainerViewPresenter.swift in Sources */,
 				75A7CA8D25CDBC070021FEB9 /* Extensions.swift in Sources */,
