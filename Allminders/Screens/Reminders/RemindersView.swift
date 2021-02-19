@@ -17,6 +17,10 @@ class RemindersView: UIView {
     
     fileprivate let categories = ["test", "longerTest", "veryLongTest", "short", "foonai", "chznadar", "heavy sheep"]
     
+    fileprivate var presentingReminders: [Reminder] = []
+    
+    fileprivate var presentingCategories: [Category] = []
+    
     fileprivate var selectedCategory: CategoryCVC?
     
     fileprivate var justAddedReminder: Bool = false
@@ -96,6 +100,28 @@ class RemindersView: UIView {
         configureCategoriesCV()
         configureSelectedCategoryLabel()
         configureRemindersCV()
+        configurePresentingCategories()
+    }
+    
+    fileprivate func configurePresentingCategories() {
+        _ = Test.reminders.map {
+            var foundEqual = false
+            for cat in presentingCategories {
+                if $0.category.isEqual(to: cat) {
+                    foundEqual = true
+                    return
+                }
+            }
+            
+            if !foundEqual {
+                presentingCategories.append($0.category)
+            }
+            
+            foundEqual = false
+        }
+        
+        categoriesCV.reloadData()
+        remindersCV.reloadData()
     }
     
     fileprivate func configureLargeLabel() {
@@ -199,7 +225,8 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView.tag == 0 ? categories.count : Test.reminders.count
+        //return collectionView.tag == 0 ? categories.count : Test.reminders.count
+        return collectionView.tag == 0 ? presentingCategories.count : presentingReminders.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -241,13 +268,14 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
         var retCell: T!
         if tag == 0 {
             let cCell = cell as! CategoryCVC
-            cCell.category = Test.categories[indexPath.row]
+            //cCell.category = Test.categories[indexPath.row]
+            cCell.category = presentingCategories[indexPath.row]
             selectFirst(categoryCell: cCell)
             retCell = cCell as? T
             
         } else {
             let rCell = cell as! ReminderCVC
-            rCell.reminder = Test.reminders[indexPath.row]
+            rCell.reminder = presentingReminders[indexPath.row]
             rCell.initCellColor()
             rCell.backgroundColor = .clear
             retCell = rCell as? T
@@ -266,8 +294,23 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
             
             selectedCategoryLabel.text = cell.category.name
             selectedCategory = cell
-            #warning("Show all reminders under the selected category")
+            presentReminders(forSelectedCategoryCell: selectedCategory!)
             firstCategorySelected = true
+        }
+    }
+    
+    fileprivate func presentReminders(forSelectedCategoryCell categoryCell: CategoryCVC) {
+        var didFinish = false
+        presentingReminders.removeAll()
+        if let unwrappedCategory = categoryCell.category {
+            _ = Test.reminders.map {
+                if $0.category.isEqual(to: unwrappedCategory) {
+                    presentingReminders.append($0)
+                }
+                didFinish = true
+            }
+            
+            if didFinish { remindersCV.reloadData() }
         }
     }
     
@@ -308,6 +351,7 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
                 
                 self.selectedCategory = cell
                 self.selectedCategoryLabel.text = self.selectedCategory?.categoryLabel.text
+                self.presentReminders(forSelectedCategoryCell: cell)
                 
             }, completion: nil)
         }

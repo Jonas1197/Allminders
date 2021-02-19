@@ -44,4 +44,8 @@ class Category {
         self.name = name.capitalizingFirstLetter()
         self.color = color
     }
+    
+    func isEqual(to category: Category) -> Bool {
+        return name == category.name
+    }
 }
