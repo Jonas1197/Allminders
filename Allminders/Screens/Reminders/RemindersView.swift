@@ -15,19 +15,23 @@ class RemindersView: UIView {
     
     var delegate: RemindersViewDelegate?
     
-    fileprivate let categories = ["test", "longerTest", "veryLongTest", "short", "foonai", "chznadar", "heavy sheep"]
+    fileprivate var presentingReminders:   [Reminder] = []
     
-    fileprivate var presentingReminders: [Reminder] = []
+    fileprivate var presentingCategories:  [Category] = []
     
-    fileprivate var presentingCategories: [Category] = []
+    fileprivate var selectedCategory:      CategoryCVC?
     
-    fileprivate var selectedCategory: CategoryCVC?
+    fileprivate var justAddedReminder:     Bool = false
     
-    fileprivate var justAddedReminder: Bool = false
+    fileprivate var secondCategorySelected: Bool = false
     
-    fileprivate var firstCategorySelected: Bool = false
+    fileprivate var catCount = 0
     
-    fileprivate var prevColor: UIColor!
+    fileprivate var prevColor:             UIColor!
+    
+    fileprivate var categoriesCV:          UICollectionView!
+    
+    fileprivate var remindersCV:           UICollectionView!
     
     fileprivate let largeLabel: UILabel = {
         let label       = UILabel()
@@ -40,11 +44,11 @@ class RemindersView: UIView {
     
     fileprivate let addButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = UIFont(name: Font.semibold, size: 40)
+        button.titleLabel?.font      = UIFont(name: Font.semibold, size: 40)
         button.titleLabel?.textColor = .white
+        button.backgroundColor       = Colors.deepBlue
+        button.tintColor             = .white
         button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.backgroundColor = Colors.deepBlue
-        button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -68,16 +72,14 @@ class RemindersView: UIView {
     }()
     
     fileprivate let separatorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Colors.stoneGrey
+        let view                = UIView()
+        view.backgroundColor    = Colors.stoneGrey
         view.layer.cornerRadius = 0.5
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    fileprivate var categoriesCV: UICollectionView!
     
-    fileprivate var remindersCV: UICollectionView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -104,6 +106,7 @@ class RemindersView: UIView {
     }
     
     fileprivate func configurePresentingCategories() {
+        presentingCategories.append(.init(name: "[ADD]", color: Colors.stoneGrey))
         _ = Test.reminders.map {
             var foundEqual = false
             for cat in presentingCategories {
@@ -164,9 +167,8 @@ class RemindersView: UIView {
     
     fileprivate func insert(cellWithString string: String, atIndex index: Int) {
         Test.reminders.insert(.init(body: string, dateCreated: Date(), category: (selectedCategory?.category)!), at: index)
-        remindersCV.reloadData()
-        remindersCV.layoutIfNeeded()
-        justAddedReminder.toggle()
+        presentReminders(forSelectedCategoryCell: selectedCategory!)
+        justAddedReminder = true
     }
     
     fileprivate func startEditingAddedCell(forCells cells: [UICollectionViewCell]) {
@@ -215,17 +217,16 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
         remindersCV                  = .init(frame: frame, collectionViewLayout: layout)
         remindersCV.tag              = 1
         remindersCV.register(ReminderCVC.self, forCellWithReuseIdentifier: Cell.cellID)
-        remindersCV.delegate        = self
-        remindersCV.dataSource      = self
-        remindersCV.backgroundColor = .clear
-        remindersCV.showsHorizontalScrollIndicator = false
-        remindersCV.allowsSelection = true
+        remindersCV.delegate         = self
+        remindersCV.dataSource       = self
+        remindersCV.backgroundColor  = .clear
+        remindersCV.showsVerticalScrollIndicator = false
+        remindersCV.allowsSelection  = true
         remindersCV.fix(in: self, below: separatorView)
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //return collectionView.tag == 0 ? categories.count : Test.reminders.count
         return collectionView.tag == 0 ? presentingCategories.count : presentingReminders.count
     }
     
@@ -267,36 +268,37 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
     fileprivate func configure<T>(_ cell: T, for tag: Int, at indexPath: IndexPath) -> T {
         var retCell: T!
         if tag == 0 {
-            let cCell = cell as! CategoryCVC
-            //cCell.category = Test.categories[indexPath.row]
-            cCell.category = presentingCategories[indexPath.row]
-            selectFirst(categoryCell: cCell)
+            let cCell       = cell as! CategoryCVC
+            cCell.category  = presentingCategories[indexPath.row]
+            if cCell.category.name == "[add]" { cCell.isAddCell() }
+            selectSecond(categoryCell: cCell)
             retCell = cCell as? T
             
         } else {
-            let rCell = cell as! ReminderCVC
-            rCell.reminder = presentingReminders[indexPath.row]
-            rCell.initCellColor()
+            let rCell             = cell as! ReminderCVC
+            rCell.reminder        = presentingReminders[indexPath.row]
             rCell.backgroundColor = .clear
+            rCell.initCellColor()
             retCell = rCell as? T
         }
         
         return retCell
     }
     
-    fileprivate func selectFirst(categoryCell cell: CategoryCVC) {
-        if !firstCategorySelected {
-            cell.layer.borderColor = cell.category.color.cgColor
+    fileprivate func selectSecond(categoryCell cell: CategoryCVC) {
+        if !secondCategorySelected && catCount == 1 {
+            cell.layer.borderColor       = cell.category.color.cgColor
             cell.categoryLabel.textColor = cell.category.color
-            cell.layer.borderWidth = 0.4
-            cell.backgroundColor = .white
+            cell.layer.borderWidth       = 0.4
+            cell.backgroundColor         = .white
             cell.didSelect.toggle()
             
             selectedCategoryLabel.text = cell.category.name
-            selectedCategory = cell
+            selectedCategory           = cell
             presentReminders(forSelectedCategoryCell: selectedCategory!)
-            firstCategorySelected = true
+            secondCategorySelected      = true
         }
+        catCount += 1
     }
     
     fileprivate func presentReminders(forSelectedCategoryCell categoryCell: CategoryCVC) {
@@ -315,16 +317,24 @@ extension RemindersView: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        UIImpactFeedbackGenerator().impactOccurred(intensity: .greatestFiniteMagnitude)
         if collectionView.tag == 0 {
-            animate(CategoryCell: collectionView.cellForItem(at: indexPath) as! CategoryCVC)
+            if let cCell = collectionView.cellForItem(at: indexPath) as? CategoryCVC {
+                if cCell.category.name == "[add]" {
+                    print("[Creating new category]")
+                } else {
+                    animate(CategoryCell: cCell)
+                }
+            }
+            
         } else {
-            print("<Reminder selected: \(Test.reminders[indexPath.row].id)")
+            #warning("reminder cell does something?")
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView.tag == 0 {
-            let size = getEstimatedFrame(forText: categories[indexPath.row])
+            let size = getEstimatedFrame(forText: presentingCategories[indexPath.row].name)
             return .init(width: size.width + 15, height: size.height + 15)
         } else {
             return .init(width: frame.width, height: 50)

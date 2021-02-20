@@ -57,4 +57,9 @@ class CategoryCVC: UICollectionViewCell {
     fileprivate func configureConstraints() {
         categoryLabel.fix(in: contentView)
     }
+    
+    func isAddCell() {
+        categoryLabel.text = "+"
+        categoryLabel.font = UIFont(name: Font.semibold, size: 30)
+    }
 }

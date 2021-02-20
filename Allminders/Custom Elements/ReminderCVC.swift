@@ -76,20 +76,20 @@ class ReminderCVC: UICollectionViewCell {
     fileprivate func setUpLayer() {
         reminderView.layer.roundCorners(to: .custom(frame.height / 4))
         //reminderView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
-        reminderView.layer.borderWidth = 0.5
-        reminderView.layer.borderColor = Colors.stoneGrey.cgColor
+        reminderView.layer.borderWidth   = 0.4
+        reminderView.layer.borderColor   = Colors.stoneGrey.cgColor
         reminderView.layer.masksToBounds = false
         
         checkView.layer.roundCorners(to: .rounded)
         //checkView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
-        checkView.layer.borderWidth = 0.4
-        checkView.layer.borderColor = Colors.stoneGrey.cgColor
+        checkView.layer.borderWidth   = 0.1
+        checkView.layer.borderColor   = Colors.stoneGrey.cgColor
         checkView.layer.masksToBounds = false
         
         checkTapperView.layer.roundCorners(to: .rounded)
-        //checkTapperView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
-        checkTapperView.layer.borderWidth = 0.6
-        checkTapperView.layer.borderColor = Colors.stoneGrey.cgColor
+        checkTapperView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
+        checkTapperView.layer.borderWidth   = 0.6
+        checkTapperView.layer.borderColor   = Colors.stoneGrey.cgColor
         checkTapperView.layer.masksToBounds = false
     }
     
@@ -110,8 +110,8 @@ class ReminderCVC: UICollectionViewCell {
         NSLayoutConstraint.activate([
             checkTapperView.centerYAnchor.constraint(equalTo: checkView.centerYAnchor),
             checkTapperView.centerXAnchor.constraint(equalTo: checkView.centerXAnchor, constant: 0),
-            checkTapperView.widthAnchor.constraint(equalToConstant: reminderView.frame.height - 15),
-            checkTapperView.heightAnchor.constraint(equalToConstant: reminderView.frame.height - 15)
+            checkTapperView.widthAnchor.constraint(equalToConstant: reminderView.frame.height - 25),
+            checkTapperView.heightAnchor.constraint(equalToConstant: reminderView.frame.height - 25)
         ])
         
         let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(checkTapped))
@@ -119,7 +119,6 @@ class ReminderCVC: UICollectionViewCell {
     }
     
     @objc fileprivate func checkTapped() {
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
             self.checked()
         }, completion: nil)
@@ -131,11 +130,13 @@ class ReminderCVC: UICollectionViewCell {
     
     private func checked() {
         if !didCheck {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             colorInGreen()
             didCheck.toggle()
             didCheck ? reminder.check() : reminder.uncheck()
             
         } else {
+            UIImpactFeedbackGenerator().impactOccurred(intensity: .greatestFiniteMagnitude)
             colorInOriginal()
             didCheck.toggle()
             didCheck ? reminder.check() : reminder.uncheck()
@@ -161,13 +162,13 @@ class ReminderCVC: UICollectionViewCell {
     private func colorInOriginal() {
         //reminderView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
         reminderView.backgroundColor      = .white
-        reminderView.layer.borderWidth    = 0.5
+        reminderView.layer.borderWidth    = 0.4
         reminderView.layer.borderColor    = Colors.stoneGrey.cgColor
         //self.reminderTitleLabel.textColor    = .black
         reminderTextField.textColor       = .black
         
         //checkView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
-        checkView.layer.borderWidth       = 0.4
+        checkView.layer.borderWidth       = 0.1
         checkView.backgroundColor         = .white
         
         //checkTapperView.addShadow(withOpactiy: 0.1, color: .black, radius: 4, andOffset: .init(width: 0, height: 3))
